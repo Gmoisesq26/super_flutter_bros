@@ -5,6 +5,12 @@ class MyMario extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(child: Image.asset('assets/images/stadingMario.png'));
+    return Container(
+      child: Image.asset(
+        width: 50,
+        height: 50,
+        'assets/images/stadingMario.png',
+      ),
+    );
   }
 }
