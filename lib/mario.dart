@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 
 class MyMario extends StatelessWidget {
   final direction;
+  final midrun;
 
-  MyMario({this.direction});
+  MyMario({this.direction, this.midrun});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +14,9 @@ class MyMario extends StatelessWidget {
       return Container(
         width: 50,
         height: 50,
-        child: Image.asset('assets/images/stadingMario.png'),
+        child: midrun
+            ? Image.asset('assets/images/stadingMario.png')
+            : Image.asset('assets/images/runningMario.png'),
       );
     } else {
       return Transform(
@@ -23,7 +26,9 @@ class MyMario extends StatelessWidget {
         child: Container(
           width: 50,
           height: 50,
-          child: Image.asset('assets/images/stadingMario.png'),
+          child: midrun
+              ? Image.asset('assets/images/stadingMario.png')
+              : Image.asset('assets/images/runningMario.png'),
         ),
       );
     }

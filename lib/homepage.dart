@@ -16,6 +16,7 @@ class _HomePageState extends State<HomePage> {
   double height = 0;
   double initialHeight = marioY;
   String direction = "rignt";
+  bool midrun = false;
 
   void prejump() {
     time = 0;
@@ -31,6 +32,7 @@ class _HomePageState extends State<HomePage> {
       if (initialHeight - height > 1.02) {
         setState(() {
           marioY = 1.025;
+          timer.cancel();
         });
       } else {
         setState(() {
@@ -42,6 +44,7 @@ class _HomePageState extends State<HomePage> {
 
   void moveRight() {
     direction = "right";
+    midrun = !midrun;
     setState(() {
       marioX += 0.02;
     });
@@ -49,6 +52,7 @@ class _HomePageState extends State<HomePage> {
 
   void moveLeft() {
     direction = "left";
+    midrun = !midrun;
     setState(() {
       marioX -= 0.02;
     });
@@ -66,7 +70,7 @@ class _HomePageState extends State<HomePage> {
               child: AnimatedContainer(
                 alignment: Alignment(marioX, marioY),
                 duration: Duration(milliseconds: 0),
-                child: MyMario(direction: direction),
+                child: MyMario(direction: direction, midrun: midrun),
               ),
             ),
           ),
