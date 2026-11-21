@@ -39,6 +39,18 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void moveRight() {
+    setState(() {
+      marioX += 0.02;
+    });
+  }
+
+  void moveLeft() {
+    setState(() {
+      marioX -= 0.02;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,13 +74,17 @@ class _HomePageState extends State<HomePage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  MyButton(child: Icon(Icons.arrow_back, color: Colors.white)),
+                  MyButton(
+                    child: Icon(Icons.arrow_back, color: Colors.white),
+                    function: moveLeft,
+                  ),
                   MyButton(
                     child: Icon(Icons.arrow_upward, color: Colors.white),
                     function: jump,
                   ),
                   MyButton(
                     child: Icon(Icons.arrow_forward, color: Colors.white),
+                    function: moveRight,
                   ),
                 ],
               ),
