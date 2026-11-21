@@ -1,16 +1,31 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class MyMario extends StatelessWidget {
-  const new({super.key});
+  final direction;
+
+  MyMario({this.direction});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Image.asset(
+    if (direction == "right") {
+      return Container(
         width: 50,
         height: 50,
-        'assets/images/stadingMario.png',
-      ),
-    );
+        child: Image.asset('assets/images/stadingMario.png'),
+      );
+    } else {
+      return Transform(
+        alignment: Alignment.center,
+        transform: Matrix4.rotationY(pi),
+
+        child: Container(
+          width: 50,
+          height: 50,
+          child: Image.asset('assets/images/stadingMario.png'),
+        ),
+      );
+    }
   }
 }
