@@ -49,16 +49,31 @@ class _HomePageState extends State<HomePage> {
   void moveRight() {
     direction = "right";
     midrun = !midrun;
-    setState(() {
-      marioX += 0.02;
+
+    Timer.periodic(Duration(milliseconds: 50), (timer) {
+      if (MyButton().userIsHoldingButton() == true) {
+        setState(() {
+          marioX += 0.02;
+          midrun = !midrun;
+        });
+      } else {
+        timer.cancel();
+      }
     });
   }
 
   void moveLeft() {
     direction = "left";
     midrun = !midrun;
-    setState(() {
-      marioX -= 0.02;
+    Timer.periodic(Duration(milliseconds: 50), (timer) {
+      if (MyButton().userIsHoldingButton() == true) {
+        setState(() {
+          marioX -= 0.02;
+          midrun = !midrun;
+        });
+      } else {
+        timer.cancel();
+      }
     });
   }
 
@@ -75,7 +90,7 @@ class _HomePageState extends State<HomePage> {
                 alignment: Alignment(marioX, marioY),
                 duration: Duration(milliseconds: 0),
                 child: midjump
-                    ? JumpingMario()
+                    ? JumpingMario(direction: direction)
                     : MyMario(direction: direction, midrun: midrun),
               ),
             ),
