@@ -5,6 +5,7 @@ import 'package:super_flutter_bros/button.dart';
 import 'package:super_flutter_bros/jumpingmario.dart';
 import 'package:super_flutter_bros/mario.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:super_flutter_bros/shrooms.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -14,6 +15,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   static double marioX = 0;
   static double marioY = 1.025;
+  double marioSize = 50;
+  double shroomX = 0.5;
+  double shroomY = 1.025;
   double time = 0;
   double height = 0;
   double initialHeight = marioY;
@@ -24,37 +28,49 @@ class _HomePageState extends State<HomePage> {
     textStyle: TextStyle(color: Colors.white, fontSize: 20),
   );
 
+  void checkIfAteShrooms() {
+    if ((marioX - shroomX).abs() < 0.05 && (marioY - shroomY).abs() < 0.05) {
+      setState(() {
+        marioSize = 100;
+      });
+    }
+  }
+
   void prejump() {
     time = 0;
     initialHeight = marioY;
   }
 
   void jump() {
-    midjump = true;
-    prejump();
-    Timer.periodic(Duration(milliseconds: 50), (timer) {
-      time += 0.05;
-      height = -4.9 * time * time + 5 * time;
+    if (midjump == false) {
+      midjump = true;
+      prejump();
+      Timer.periodic(Duration(milliseconds: 50), (timer) {
+        time += 0.05;
+        height = -4.9 * time * time + 5 * time;
 
-      if (initialHeight - height > 1.02) {
-        midjump = false;
-        setState(() {
-          marioY = 1.025;
-        });
-        timer.cancel();
-      } else {
-        setState(() {
-          marioY = initialHeight - height;
-        });
-      }
-    });
+        if (initialHeight - height > 1.02) {
+          midjump = false;
+          setState(() {
+            marioY = 1.025;
+          });
+          timer.cancel();
+        } else {
+          setState(() {
+            marioY = initialHeight - height;
+          });
+        }
+      });
+    }
   }
 
   void moveRight() {
     direction = "right";
+    checkIfAteShrooms();
     midrun = !midrun;
 
     Timer.periodic(Duration(milliseconds: 50), (timer) {
+      checkIfAteShrooms();
       if (MyButton().userIsHoldingButton() == true) {
         setState(() {
           marioX += 0.02;
@@ -68,8 +84,10 @@ class _HomePageState extends State<HomePage> {
 
   void moveLeft() {
     direction = "left";
+    checkIfAteShrooms();
     midrun = !midrun;
     Timer.periodic(Duration(milliseconds: 50), (timer) {
+      checkIfAteShrooms();
       if (MyButton().userIsHoldingButton() == true) {
         setState(() {
           marioX -= 0.02;
@@ -97,8 +115,16 @@ class _HomePageState extends State<HomePage> {
                     duration: Duration(milliseconds: 0),
                     child: midjump
                         ? JumpingMario(direction: direction)
-                        : MyMario(direction: direction, midrun: midrun),
+                        : MyMario(
+                            direction: direction,
+                            midrun: midrun,
+                            size: marioSize,
+                          ),
                   ),
+                ),
+                Container(
+                  alignment: Alignment(shroomX, shroomY),
+                  child: MyShroom(),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10.0),

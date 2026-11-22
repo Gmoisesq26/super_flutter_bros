@@ -5,15 +5,16 @@ import 'package:flutter/material.dart';
 class MyMario extends StatelessWidget {
   final direction;
   final midrun;
+  final size;
 
-  MyMario({this.direction, this.midrun});
+  MyMario({this.direction, this.midrun, this.size});
 
   @override
   Widget build(BuildContext context) {
     if (direction == "right") {
       return Container(
-        width: 50,
-        height: 50,
+        width: size,
+        height: size,
         child: midrun
             ? Image.asset('assets/images/stadingMario.png')
             : Image.asset('assets/images/runningMario.png'),
@@ -24,8 +25,8 @@ class MyMario extends StatelessWidget {
         transform: Matrix4.rotationY(pi),
 
         child: Container(
-          width: 50,
-          height: 50,
+          width: size,
+          height: size,
           child: midrun
               ? Image.asset('assets/images/stadingMario.png')
               : Image.asset('assets/images/runningMario.png'),
