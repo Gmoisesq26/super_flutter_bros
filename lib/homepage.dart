@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:super_flutter_bros/button.dart';
 import 'package:super_flutter_bros/jumpingmario.dart';
 import 'package:super_flutter_bros/mario.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -19,6 +20,9 @@ class _HomePageState extends State<HomePage> {
   String direction = "rignt";
   bool midrun = false;
   bool midjump = false;
+  var gameFont = GoogleFonts.pressStart2p(
+    textStyle: TextStyle(color: Colors.white, fontSize: 20),
+  );
 
   void prejump() {
     time = 0;
@@ -84,15 +88,48 @@ class _HomePageState extends State<HomePage> {
         children: [
           Expanded(
             flex: 4,
-            child: Container(
-              color: Colors.blue,
-              child: AnimatedContainer(
-                alignment: Alignment(marioX, marioY),
-                duration: Duration(milliseconds: 0),
-                child: midjump
-                    ? JumpingMario(direction: direction)
-                    : MyMario(direction: direction, midrun: midrun),
-              ),
+            child: Stack(
+              children: [
+                Container(
+                  color: Colors.blue,
+                  child: AnimatedContainer(
+                    alignment: Alignment(marioX, marioY),
+                    duration: Duration(milliseconds: 0),
+                    child: midjump
+                        ? JumpingMario(direction: direction)
+                        : MyMario(direction: direction, midrun: midrun),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(
+                        children: [
+                          Text("MARIO", style: gameFont),
+                          SizedBox(height: 10),
+                          Text("0000", style: gameFont),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Text("WORLD", style: gameFont),
+                          SizedBox(height: 10),
+                          Text("1-1", style: gameFont),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Text("TIME", style: gameFont),
+                          SizedBox(height: 10),
+                          Text("9999", style: gameFont),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
           Expanded(
